@@ -68,4 +68,23 @@ http=inject(HttpClient);
       }
     );
   }
+
+  // =========================
+  // Get Connections
+  // =========================
+  getConnections(connectionId: string = '') {
+    const token = localStorage.getItem('authToken');
+
+    const headers = new HttpHeaders({
+      Authorization: `${token}`,
+    });
+
+    return this.http.get<any>(
+      `${this.apiURL}get-connection`,
+      {
+        headers,
+        params: connectionId ? { connectionId } : {},
+      }
+    );
+  }
 }
