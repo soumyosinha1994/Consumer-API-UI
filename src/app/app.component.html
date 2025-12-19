@@ -1,0 +1,35 @@
+<!-- ================= Primary Header ================= -->
+<mat-toolbar color="primary" class="main-toolbar">
+  <button mat-icon-button routerLink="/login">
+    <mat-icon>home</mat-icon>
+  </button>
+
+  <span class="app-title">Consumer APP</span>
+
+  <span class="example-spacer"></span>
+</mat-toolbar>
+
+
+<!-- ================= Secondary Navigation ================= -->
+<mat-toolbar class="sub-toolbar">
+  <button
+    mat-raised-button
+    color="primary"
+    routerLink="/consumer-fields"
+    routerLinkActive="active-button">
+    Get Fields
+  </button>
+
+  <button style="margin-left: 10px;"
+    mat-raised-button
+    color="primary"
+    routerLink="/consumer-content-type-groups"
+    routerLinkActive="active-button">
+    Get Content Type Groups
+  </button>
+</mat-toolbar>
+
+<!-- ================= Page Content ================= -->
+<div class="page-container" style="margin-top: 100px;">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,56 @@
+<div class="flex justify-center">
+    <mat-card class="w-96 p-4">
+      <h4 class="text-xl">Get Auth Token</h4>
+      <form [formGroup]="authForm">
+        <div>
+          <mat-form-field class="w-full">
+            <mat-label>Auth URL</mat-label>
+            <input matInput type="text" formControlName="url" />
+            @if (this.authForm.controls.url.hasError('url') && !this.authForm.controls.url.hasError('required')) {
+                <mat-error>Please enter a valid url</mat-error>
+              }
+              @if (this.authForm.controls.url.hasError('required')) {
+                <mat-error>Auth URL is <strong>required</strong></mat-error>
+              }
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="w-full">
+            <mat-label>Client Id</mat-label>
+            <input matInput type="text" formControlName="clientId" />
+            @if (this.authForm.controls.clientId.hasError('required')) {
+                <mat-error>Client Id is <strong>required</strong></mat-error>
+              }
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="w-full">
+            <mat-label>Client Secret</mat-label>
+            <input matInput type="password" formControlName="clientSecret" />
+            @if (this.authForm.controls.clientSecret.hasError('required')) {
+                <mat-error>Client Secret is <strong>required</strong></mat-error>
+              }
+          </mat-form-field>
+        </div>
+        <div class="w-full flex justify-center">
+          <button mat-raised-button color="primary" (click)="GetAuthToken()">Get Auth Token</button>
+        </div>
+      </form>
+    </mat-card>
+    @if (authToken) {
+  <mat-card class="mt-2 p-4">
+    <h4 class="text-lg">Auth Token</h4>
+
+    <pre class="token-box">
+{{ authToken }}
+    </pre>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="copyToken()">
+      Copy Token
+    </button>
+  </mat-card>
+}
+  </div>

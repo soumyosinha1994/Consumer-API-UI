@@ -1,0 +1,11 @@
+.token-box {
+  white-space: pre-wrap;      /* allow wrapping */
+  word-break: break-all;      /* break long strings */
+  overflow-wrap: anywhere;   /* modern browsers */
+  font-size: 12px;
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+}
