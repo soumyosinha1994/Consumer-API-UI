@@ -21,3 +21,8 @@
 .active-button {
   box-shadow: 0 0 0 2px #b53f3f66;
 }
+.page-container {
+  padding: 16px 24px;       /* 👈 MUCH smaller padding */
+  max-width: 100%;
+  box-sizing: border-box;
+}

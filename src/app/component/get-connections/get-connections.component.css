@@ -19,3 +19,15 @@
   transform: translate(-50%, -50%);
   z-index: 1000;
 }
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;        /* 👈 horizontal scroll */
+}
+
+table {
+  min-width: 1200px;       /* 👈 prevents column collapse */
+}
+
+th, td {
+  white-space: nowrap;     /* 👈 keep values readable */
+}

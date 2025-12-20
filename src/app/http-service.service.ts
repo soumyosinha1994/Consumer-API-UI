@@ -87,4 +87,41 @@ http=inject(HttpClient);
       }
     );
   }
+
+  // =========================
+// Add Connection
+// =========================
+addConnection(payload: any) {
+  const token = localStorage.getItem('authToken');
+
+  const headers = new HttpHeaders({
+    Authorization: `${token}`,
+  });
+
+  return this.http.post<any>(
+    `${this.apiURL}add-connection`,
+    payload,
+    { headers }
+  );
+}
+
+// =========================
+// Delete Connection
+// =========================
+deleteConnection(connectionId: string) {
+  const token = localStorage.getItem('authToken');
+
+  const headers = new HttpHeaders({
+    Authorization: `${token}`,
+  });
+
+  return this.http.delete<any>(
+    `${this.apiURL}delete-connection`,
+    {
+      headers,
+      params: { connectionId },
+    }
+  );
+}
+
 }
