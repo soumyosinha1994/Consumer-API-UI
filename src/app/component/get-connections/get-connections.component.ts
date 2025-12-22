@@ -151,7 +151,7 @@ createForm = this.fb.group({
       next: () => {
         this.createForm.reset();
         this.showCreateForm = false;
-        this.loadConnections(); // 👈 reload all
+        this.loadConnections();
       },
       error: (err) => {
         console.error('Create failed', err);

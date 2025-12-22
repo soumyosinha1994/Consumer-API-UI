@@ -22,7 +22,7 @@ http=inject(HttpClient);
     console.log("Token in service:", token);
 
     const headers = new HttpHeaders({
-      Authorization: `${token}`,
+      Authorization: `Bearer ${token}`,
     });
 
     return this.http.get<any>(
@@ -36,7 +36,7 @@ http=inject(HttpClient);
     console.log("Token in service:", token);
 
     const headers = new HttpHeaders({
-      Authorization: `${token}`,
+      Authorization: `Bearer ${token}`,
     });
 
     return this.http.get<any>(
@@ -53,7 +53,7 @@ http=inject(HttpClient);
     const token = localStorage.getItem('authToken');
 
     const headers = new HttpHeaders({
-      Authorization: `${token}`,
+      Authorization: `Bearer ${token}`,
     });
 
     return this.http.get<any>(
@@ -76,7 +76,7 @@ http=inject(HttpClient);
     const token = localStorage.getItem('authToken');
 
     const headers = new HttpHeaders({
-      Authorization: `${token}`,
+      Authorization: `Bearer ${token}`,
     });
 
     return this.http.get<any>(
@@ -95,7 +95,7 @@ addConnection(payload: any) {
   const token = localStorage.getItem('authToken');
 
   const headers = new HttpHeaders({
-    Authorization: `${token}`,
+    Authorization: `Bearer ${token}`,
   });
 
   return this.http.post<any>(
@@ -112,7 +112,7 @@ deleteConnection(connectionId: string) {
   const token = localStorage.getItem('authToken');
 
   const headers = new HttpHeaders({
-    Authorization: `${token}`,
+    Authorization: `Bearer ${token}`,
   });
 
   return this.http.delete<any>(
