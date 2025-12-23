@@ -44,7 +44,7 @@ export class ConsumerContentTypeGroupsByIdComponent {
   // =============================
   // API Call
   // =============================
-  getContentTypes(): void {
+  getContentTypesGroupsById(): void {
     if (this.form.invalid) return;
 
     const { contentTypeGroupId, operation } = this.form.value;

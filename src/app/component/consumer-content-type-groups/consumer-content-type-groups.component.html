@@ -28,14 +28,25 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="getContentTypeGroups()">
+      (click)="getContentTypeGroups()"
+      [disabled]="loading">
       Get Content Type Groups
     </button>
   </form>
 </mat-card>
 
+<!-- ================= Loader ================= -->
+@if (loading) {
+  <div class="page-loader">
+    <mat-progress-spinner
+      diameter="56"
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+}
+
 <!-- ================= ITEMS TABLE ================= -->
-@if (items.length > 0) {
+@if (!loading && items.length > 0) {
   <mat-card class="mt-6 p-4">
     <h4>Content Type Groups</h4>
 
@@ -45,7 +56,6 @@
       class="mat-elevation-z2 w-full mt-2">
 
       @for (column of displayedColumns; track column) {
-
         <ng-container [matColumnDef]="column">
           <th mat-header-cell *matHeaderCellDef>
             {{ column | titlecase }}
@@ -55,11 +65,17 @@
             {{ row[column] }}
           </td>
         </ng-container>
-
       }
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+  </mat-card>
+}
+
+<!-- ================= EMPTY STATE ================= -->
+@if (!loading && items.length === 0) {
+  <mat-card class="mt-6 p-4 text-gray-500">
+    No content type groups found.
   </mat-card>
 }

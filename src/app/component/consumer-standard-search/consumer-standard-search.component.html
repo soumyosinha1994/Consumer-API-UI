@@ -1,1 +1,91 @@
-<p>consumer-standard-search works!</p>
+<!-- ================= Input Card ================= -->
+<mat-card class="p-4 w-full max-w-3xl">
+  <h3>Standard Search</h3>
+
+  <form [formGroup]="form" (ngSubmit)="search()" class="grid grid-cols-2 gap-4">
+
+    <mat-form-field>
+      <mat-label>Content Type Group ID</mat-label>
+      <input matInput formControlName="contentTypeGroupId" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Content Type ID</mat-label>
+      <input matInput formControlName="contentTypeId" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Min Creation Date</mat-label>
+      <input matInput formControlName="minCreationDate" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Max Creation Date</mat-label>
+      <input matInput formControlName="maxCreationDate" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Offset</mat-label>
+      <input matInput type="number" formControlName="offset" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Page Size</mat-label>
+      <input matInput type="number" formControlName="pageSize" />
+    </mat-form-field>
+
+    <div class="col-span-2">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="loading">
+        Search
+      </button>
+    </div>
+
+  </form>
+</mat-card>
+
+<!-- ================= Loader ================= -->
+@if (loading) {
+  <div class="page-loader">
+    <mat-progress-spinner diameter="56" mode="indeterminate"></mat-progress-spinner>
+  </div>
+}
+
+<!-- ================= RESULTS TABLE ================= -->
+@if (!loading && rows.length > 0) {
+  <mat-card class="mt-6 p-4">
+    <h4>Search Results</h4>
+
+    <div class="table-wrapper">
+      <table
+        mat-table
+        [dataSource]="rows"
+        class="mat-elevation-z2 w-full">
+
+        @for (column of displayedColumns; track column) {
+          <ng-container [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ column | titlecase }}
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+              {{ row[column] }}
+            </td>
+          </ng-container>
+        }
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-card>
+}
+
+@if (!loading && rows.length === 0) {
+  <mat-card class="mt-6 p-4 text-gray-500">
+    No results found.
+  </mat-card>
+}

@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpServiceService } from '../../http-service.service';
 
 @Component({
@@ -17,10 +18,14 @@ import { HttpServiceService } from '../../http-service.service';
     MatInputModule,
     MatButtonModule,
     MatTableModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './consumer-fields.component.html',
 })
 export class ConsumerFieldsComponent {
+
+  loading = false;
+
   response: any;
   simpleFields: any[] = [];
   displayedColumns: string[] = [];
@@ -35,27 +40,45 @@ export class ConsumerFieldsComponent {
     private consumerService: HttpServiceService
   ) {}
 
-  getFields() {
+  // =============================
+  // Get Fields
+  // =============================
+  getFields(): void {
     if (this.form.invalid) return;
+
+    this.loading = true;
+
+    // Reset state
+    this.response = null;
+    this.simpleFields = [];
+    this.flattenedSimpleFields = [];
+    this.displayedColumns = [];
 
     this.consumerService
       .getConsumerFields(this.form.value.contentId!)
-      .subscribe((res: any) => {
-        const simpleField = res?.result?.simpleFields ?? [];
-        this.response = res;
-        this.simpleFields = res?.result?.simpleFields ?? [];
+      .subscribe({
+        next: (res: any) => {
+          const simpleFields = res?.result?.simpleFields ?? [];
 
-        this.flattenedSimpleFields = this.flattenSimpleFields(simpleField);
+          this.response = res;
+          this.simpleFields = simpleFields;
+          this.flattenedSimpleFields = this.flattenSimpleFields(simpleFields);
 
-        this.displayedColumns =
+          this.displayedColumns =
             this.flattenedSimpleFields.length > 0
               ? Object.keys(this.flattenedSimpleFields[0])
               : [];
-
+        },
+        error: (err) => {
+          console.error('Failed to load consumer fields', err);
+        },
+        complete: () => {
+          this.loading = false;
+        },
       });
   }
 
-    private flattenSimpleFields(simpleFields: any[]): any[] {
+  private flattenSimpleFields(simpleFields: any[]): any[] {
     return simpleFields.map((field) => ({
       // Root
       id: field.id,
@@ -76,5 +99,4 @@ export class ConsumerFieldsComponent {
       minLength: field.definition?.dataTypeInfo?.minCharLength,
     }));
   }
-
 }

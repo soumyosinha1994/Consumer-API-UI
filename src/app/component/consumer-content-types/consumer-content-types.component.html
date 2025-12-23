@@ -2,7 +2,7 @@
 <mat-card class="w-96 p-4">
   <h3>Get Content Type</h3>
 
-  <form [formGroup]="form" (ngSubmit)="getContentType()">
+  <form [formGroup]="form">
 
     <mat-form-field class="w-full">
       <mat-label>Content Type ID</mat-label>
@@ -24,9 +24,9 @@
     <button
       mat-raised-button
       color="primary"
-      type="submit"
+      (click)="getContentType()"
       [disabled]="loading">
-      Get Content Type
+      Get Content Types
     </button>
   </form>
 </mat-card>

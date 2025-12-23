@@ -11,14 +11,25 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="getFields()">
+      (click)="getFields()"
+      [disabled]="loading">
       Get Fields
     </button>
   </form>
 </mat-card>
 
+<!-- ================= Loader ================= -->
+@if (loading) {
+  <div class="page-loader">
+    <mat-progress-spinner
+      diameter="56"
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+}
+
 <!-- ================= SIMPLE FIELDS ================= -->
-@if (flattenedSimpleFields.length > 0) {
+@if (!loading && flattenedSimpleFields.length > 0) {
   <mat-card class="mt-6 p-4">
     <h4>Simple Fields</h4>
 
@@ -28,7 +39,6 @@
       class="mat-elevation-z2 w-full mt-2">
 
       @for (column of displayedColumns; track column) {
-
         <ng-container [matColumnDef]="column">
           <th mat-header-cell *matHeaderCellDef>
             {{ column | titlecase }}
@@ -38,18 +48,16 @@
             {{ row[column] }}
           </td>
         </ng-container>
-
       }
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
     </table>
   </mat-card>
 }
 
 <!-- ================= COMPLEX FIELDS ================= -->
-@if (response?.result?.complexFields?.length > 0) {
+@if (!loading && response?.result?.complexFields?.length > 0) {
   <mat-card class="mt-6 p-4">
     <h4>Complex Fields</h4>
 
@@ -61,7 +69,6 @@
         </h5>
 
         @if (complex.simpleFields?.length > 0) {
-
           <table
             mat-table
             [dataSource]="complex.simpleFields"
@@ -85,9 +92,18 @@
         }
 
         @if (!complex.simpleFields?.length) {
-          <p class="text-gray-500 mt-2">No simple fields inside this complex field.</p>
+          <p class="text-gray-500 mt-2">
+            No simple fields inside this complex field.
+          </p>
         }
       </mat-card>
     }
+  </mat-card>
+}
+
+<!-- ================= EMPTY STATE ================= -->
+@if (!loading && flattenedSimpleFields.length === 0 && !response) {
+  <mat-card class="mt-6 p-4 text-gray-500">
+    No fields found.
   </mat-card>
 }
