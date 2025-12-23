@@ -17,6 +17,7 @@ http=inject(HttpClient);
     });
    }
 
+   // ================= Content Fields =================
    getConsumerFields(contentId: string) {
     const token = localStorage.getItem('authToken');
     console.log("Token in service:", token);
@@ -31,19 +32,6 @@ http=inject(HttpClient);
     );
   }
 
-  getConsumerContentTypeGroups(contentId: string) {
-    const token = localStorage.getItem('authToken');
-    console.log("Token in service:", token);
-
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
-    return this.http.get<any>(
-      `${this.apiURL}api/Consumer/${contentId}/fields`,
-      { headers }
-    );
-  }
 // ================= Content Type Groups =================
   getContentTypeGroups(
     operation: string,
@@ -62,6 +50,140 @@ http=inject(HttpClient);
         headers,
         params: {
           operation,
+          offset,
+          pageSize,
+        },
+      }
+    );
+  }
+
+  // ================= Content Type Groups By Id =================
+  getContentTypeGroupsById(
+    operation: string,
+    contentTypeGroupId: string
+  ) {
+    const token = localStorage.getItem('authToken');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.get<any>(
+      `${this.apiURL}content-type-groups-Id/${contentTypeGroupId}`,
+      {
+        headers,
+        params: {
+          operation,
+        },
+      }
+    );
+  }
+
+  // ================= Content Type =================
+  getContentType(
+    operation: string,
+    contentTypeId: string
+  ) {
+    const token = localStorage.getItem('authToken');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.get<any>(
+      `${this.apiURL}content-types/${contentTypeId}`,
+      {
+        headers,
+        params: {
+          operation,
+        },
+      }
+    );
+  }
+
+  // ================= Data Objects Queries =================
+  dataObjectQueries(
+    offset: number,
+    pageSize: number
+  ) {
+    const token = localStorage.getItem('authToken');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.get<any>(
+      `${this.apiURL}data-objects-queries`,
+      {
+        headers,
+        params: {
+          offset,
+          pageSize,
+        },
+      }
+    );
+  }
+
+  // ================= Data Data Objects Queries By Id =================
+  getDataObjectsQueriesById(
+    queryId: string
+  ) {
+    const token = localStorage.getItem('authToken');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.get<any>(
+      `${this.apiURL}data-objects-queries-by-id/${queryId}`,
+      {
+        headers
+      }
+    );
+  }
+
+  // ================= Execute Data Objects Queries =================
+  executeDataObjectsQueries(payload: any,
+    queryId: string,
+    offset: number,
+    pageSize: number
+  ) {
+    const token = localStorage.getItem('authToken');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.post<any>(
+      `${this.apiURL}execute-data-objects-queries/${queryId}`,
+      payload,
+      {
+        headers,
+        params: {
+          offset,
+          pageSize,
+        },
+      }
+    );
+  }
+
+  // ================= Standard Search =================
+  standardSearch(payload: any,
+    offset: number,
+    pageSize: number
+  ) {
+    const token = localStorage.getItem('authToken');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.post<any>(
+      `${this.apiURL}standard-search`,
+      payload,
+      {
+        headers,
+        params: {
           offset,
           pageSize,
         },
