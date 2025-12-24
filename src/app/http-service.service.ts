@@ -191,6 +191,33 @@ http=inject(HttpClient);
     );
   }
 
+  // ================= Get Integrations =================
+  getIntegrations(
+  integrationId?: string,
+  pageSize?: number,
+  cursor?: string
+) {
+  const token = localStorage.getItem('authToken');
+
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+  });
+
+
+  const url = `${this.apiURL}system-integrations`;
+
+
+  const params: any = {};
+  if (pageSize !== undefined && pageSize !== 0) params.pageSize = pageSize;
+  if (cursor !== undefined && cursor !== '') params.cursor = cursor;
+  if (integrationId !== undefined && integrationId !== '') params.integrationId = integrationId;
+
+  return this.http.get<any>(url, {
+    headers,
+    params,
+  });
+}
+
   // =========================
   // Get Connections
   // =========================

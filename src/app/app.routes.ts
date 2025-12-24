@@ -9,6 +9,7 @@ import { ConsumerDataObjectQueriesComponent } from './component/consumer-data-ob
 import { ConsumerDataObjectQueriesByIdComponent } from './component/consumer-data-object-queries-by-id/consumer-data-object-queries-by-id.component';
 import { ConsumerExecuteDataObjectQueriesComponent } from './component/consumer-execute-data-object-queries/consumer-execute-data-object-queries.component';
 import { ConsumerStandardSearchComponent } from './component/consumer-standard-search/consumer-standard-search.component';
+import { ConsumerSystemIntegrationsComponent } from './component/consumer-system-integrations/consumer-system-integrations.component';
 
 export const routes: Routes = [
     {
@@ -55,6 +56,10 @@ export const routes: Routes = [
     {
         path:"consumer-standard-search",
         component:ConsumerStandardSearchComponent,
+    },
+    {
+        path:"consumer-system-integrations",
+        component:ConsumerSystemIntegrationsComponent,
     },
 
 ];
