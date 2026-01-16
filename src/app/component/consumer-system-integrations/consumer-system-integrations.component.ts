@@ -89,19 +89,31 @@ export class ConsumerSystemIntegrationsComponent implements OnInit {
       .getIntegrations(integrationId, pageSize!, cursor!)
       .subscribe({
         next: (res: any) => {
-          const data = res?.systemIntegrations ?? [];
-          const pageInfo = res?.pageInfo;
+          let data: any[] = [];
+  let pageInfo: any = null;
 
-          // Append for pagination
-          this.rows = reset ? data : [...this.rows, ...data];
 
-          if (this.rows.length > 0) {
-            this.displayedColumns = Object.keys(this.rows[0]);
-          }
+  if (Array.isArray(res?.systemIntegrations)) {
+    data = res.systemIntegrations;
+    pageInfo = res.pageInfo;
+  }
 
-          // Cursor info
-          this.endCursor = pageInfo?.endCursor ?? '';
-          this.hasNextPage = pageInfo?.hasNextPage ?? false;
+  else if (res?.id) {
+    data = [res];
+    pageInfo = null;
+  }
+
+  // Append or reset
+  this.rows = reset ? data : [...this.rows, ...data];
+
+  // Dynamic columns
+  if (this.rows.length > 0) {
+    this.displayedColumns = Object.keys(this.rows[0]);
+  }
+
+  // Cursor info (ONLY for list response)
+  this.endCursor = pageInfo?.endCursor ?? '';
+  this.hasNextPage = !!pageInfo?.hasNextPage;
         },
         error: (err) => {
           console.error('Failed to load system integrations', err);
